@@ -1,5 +1,5 @@
 level_map = [
-'              ',
+'  w    wwww   ',
 '              ',
 '      p       ',
 ' b b  b b b  b',   
