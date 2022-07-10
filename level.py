@@ -11,6 +11,8 @@ class Level:
         self.world_shift = 0
         self.shift_threshold = screen_width // 6
 
+        self.current_x = 0
+
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
@@ -50,12 +52,22 @@ class Level:
 
         for sprite in self.tiles.sprites():
                 if sprite.rect.colliderect(player.rect):
-                    print(player.rect.bottom, " ", sprite.rect.top)
+                    # print(player.rect.bottom, " ", sprite.rect.top)
                     # sprite.image.fill('black')
                     if player.direction.x < 0:
                         player.rect.left = sprite.rect.right
+                        player.on_left = True
+                        self.cuttent_x = player.rect.left
                     if player.direction.x > 0:
                         player.rect.right = sprite.rect.left
+                        player.on_right = True
+                        self.cuttent_x = player.rect.right
+
+        if player.on_left and (player.rect.left < self.current_x or player.direction.x >=0):
+            player.on_left = False
+        if player.on_right and (player.rect.right > self.current_x or player.direction.x <=0):
+            player.on_right = False
+
 
     def vertical_movement_collision(self):
         player = self.player.sprite
@@ -66,10 +78,16 @@ class Level:
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top 
                     player.direction.y = 0
+                    player.on_ground = True
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
-
+                    player.on_ceiling = True
+        #replace gravity check with something more explicit
+        if player.on_ground and (player.direction.y < 0 or player.direction.y > player.gravity):
+            player.on_ground = False
+        if player.on_ceiling and player.direction.y > 0:
+            player.on_ceiling = False
 
     def run(self):
 
