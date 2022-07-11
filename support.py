@@ -1,4 +1,5 @@
 from os import walk
+from pathlib import Path
 import pygame
 
 def import_folder(path):
@@ -10,3 +11,15 @@ def import_folder(path):
             surface_list.append(image_surf)
         
     return surface_list
+
+def import_sounds(path):
+    sounds_list = {} 
+    for _,_,snd_files in walk(path):
+        for file in snd_files:
+            if 'wav' in file:
+                # sounds_list.append(file)
+                sounds_list[Path(file).stem]= file 
+
+    return sounds_list
+    
+print(import_sounds('sounds/'))

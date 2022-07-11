@@ -38,13 +38,13 @@ class Player(pygame.sprite.Sprite):
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
             self.frame_index = 0
-            print(self.status)
+            # print(self.status)
         image = animation[int(self.frame_index)]
         if self.facing_right:
-            self.image = image
-        else:
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
+        else:
+            self.image = image
 
         #set rect
         if self.on_ground and self.on_right:

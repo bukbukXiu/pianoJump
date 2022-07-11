@@ -1,34 +1,48 @@
 import pygame
+from support import import_sounds
 from tiles import Tile
 from player import Player
 from settings import tile_size, screen_width
+from pygame import mixer
 
 class Level:
     def __init__(self, level_data, surface):
         # level setup
         self.display_surface = surface
         self.setup_level(level_data)
+        self.setup_sound()
         self.world_shift = 0
         self.shift_threshold = screen_width // 6
-
         self.current_x = 0
+        self.scale = 'abcdefg'
+
+    def setup_sound(self):
+        mixer.init() 
 
     def setup_level(self, layout):
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
+        self.sounds = import_sounds('sounds/')
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 if cell != ' ':
-                    if cell == 'w':
-                        color = 'white'
-                        tile = Tile((col_index * tile_size, row_index * tile_size), tile_size, color)
-                        self.tiles.add(tile)
-                    elif cell == 'b':
-                        color = 'black'
-                        tile = Tile((col_index * tile_size, row_index * tile_size), tile_size, color)
-                        self.tiles.add(tile)
-                    elif cell == 'p':
+                    # if cell == 'w':
+                    #     color = 'white'
+                    #     tile = Tile((col_index * tile_size, row_index * tile_size), tile_size, color, 'white')
+                    #     self.tiles.add(tile)
+                    # elif cell == 'b':
+                    #     color = 'black'
+                    #     tile = Tile((col_index * tile_size, row_index * tile_size), tile_size, color, 'black')
+                    #     self.tiles.add(tile)
+                    if cell == 'p':
                         self.player.add(Player((col_index * tile_size, row_index * tile_size)))
+                    else:
+                        tile = Tile((col_index*tile_size, row_index*tile_size), tile_size, cell)
+                        if cell == cell.lower():
+                            tile.image.fill('white')
+                        else:
+                            tile.image.fill('black')
+                        self.tiles.add(tile)
 
 
     def scroll_x(self):
@@ -76,6 +90,10 @@ class Level:
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
+                    if player.on_ground == False:
+                        print(sprite.note)
+                        mixer.music.load('sounds/' + self.sounds[sprite.note])
+                        mixer.music.play()
                     player.rect.bottom = sprite.rect.top 
                     player.direction.y = 0
                     player.on_ground = True
@@ -83,7 +101,7 @@ class Level:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
                     player.on_ceiling = True
-        #replace gravity check with something more explicit
+        # replace gravity check with something more explicit
         if player.on_ground and (player.direction.y < 0 or player.direction.y > player.gravity):
             player.on_ground = False
         if player.on_ceiling and player.direction.y > 0:
