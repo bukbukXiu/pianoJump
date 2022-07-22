@@ -1,5 +1,3 @@
-from ast import Load
-from json import load
 import pygame
 # from sys import exit
 import sys
