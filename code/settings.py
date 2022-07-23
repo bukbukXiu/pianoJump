@@ -5,6 +5,10 @@ screen_width = 12 * tile_size
 screen_height = 480
 
 layout = 'aAbcCdDefFgG'
+player_position = 'e'
+
+jump_speed = -15
+gravity = 1
 
 # lowercase indicates a sharp
 note_tile_indices = {
