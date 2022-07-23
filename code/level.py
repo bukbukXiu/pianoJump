@@ -1,7 +1,7 @@
 from typing import SupportsFloat
 import pygame
 from player import Player
-from misc import import_individual_tiles
+from misc import import_individual_tiles, import_sounds
 from settings import *
 from tiles import Tile
 
@@ -15,6 +15,10 @@ class Level:
 
         # player
         self.player = self.player_setup(player_position) 
+
+        #sounds
+        self.sounds = import_sounds('sounds/')
+
 
     def create_tile_group(self, layout):
         tile_list = import_individual_tiles('graphics/tiles/keys.png')
@@ -43,6 +47,10 @@ class Level:
         for sprite in collidable_sprites:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
+                    if player.on_ground == False:
+                        note = sprite.note
+                        effect = pygame.mixer.Sound(self.sounds[note])
+                        effect.play()
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
                     player.on_ground = True

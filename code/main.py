@@ -3,12 +3,14 @@ import pygame
 import sys
 from settings import *
 from level import Level
+from pygame import mixer
 
 # Setup
 pygame.init()
+mixer.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
-layout = 'aAbcCdDefFgG'
+# layout = 'aAbcCdDefFgG'
 level = Level(layout, screen)
 
 while True:

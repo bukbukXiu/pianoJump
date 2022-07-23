@@ -1,5 +1,7 @@
 import pygame
 from settings import tile_size
+from os import walk
+from pathlib import Path
 
 def import_individual_tiles(path):
     surface = pygame.image.load('graphics/tiles/keys.png').convert_alpha()
@@ -12,3 +14,12 @@ def import_individual_tiles(path):
         tiles_list.append(tile_surface)
 
     return tiles_list
+
+def import_sounds(path):
+    sounds_dict = {}
+    for _,_,snd_files in walk(path):
+        for file in snd_files:
+            if 'wav' in file:
+                dict_key = Path(file).stem
+                sounds_dict[dict_key] = path + file
+    return sounds_dict
