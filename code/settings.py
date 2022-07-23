@@ -7,6 +7,7 @@ screen_height = 480
 layout = 'aAbcCdDefFgG'
 player_position = 'e'
 
+walk_speed = 10
 jump_speed = -15
 gravity = 1
 

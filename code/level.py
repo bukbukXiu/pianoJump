@@ -50,10 +50,13 @@ class Level:
             player.on_ground = False
 
     def horizontal_collision(self):
-        pass
+        player = self.player.sprite
+        player.rect.x += player.direction.x * walk_speed
+        
 
     def run(self):
         self.key_sprites.draw(self.display_surface)
         self.player.draw(self.display_surface)
         self.player.update()
         self.vertical_collision()
+        self.horizontal_collision()

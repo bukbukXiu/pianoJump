@@ -8,16 +8,20 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft = pos)
         self.direction = pygame.math.Vector2(0,0)
         self.on_ground = False
+        self.facing_rigth = False
 
     def get_input(self):
         keys = pygame.key.get_pressed()
-
+        image = pygame.image.load('graphics/character/small_finger.png').convert_alpha()
+        flipped_image = pygame.transform.flip(image, True, False)
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
             self.facing_rigth = True
+            self.image = flipped_image 
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
             self.facing_rigth = False
+            self.image = image 
         else:
             self.direction.x = 0
 
@@ -27,7 +31,6 @@ class Player(pygame.sprite.Sprite):
     def apply_gravity(self):
         self.direction.y += gravity
         self.rect.y += self.direction.y
-
 
     def jump(self):
         if self.on_ground: 
