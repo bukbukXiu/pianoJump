@@ -45,13 +45,14 @@ class Level:
         player.apply_gravity()
         collidable_sprites = self.key_sprites.sprites()
         for sprite in collidable_sprites:
-            if sprite.rect.colliderect(player.rect):
+            if sprite.rect.colliderect(player.middlerect):
                 if player.direction.y > 0:
                     if player.on_ground == False:
                         note = sprite.note
                         effect = pygame.mixer.Sound(self.sounds[note])
                         effect.play()
                     player.rect.bottom = sprite.rect.top
+                    player.middlerect.bottom = sprite.rect.top
                     player.direction.y = 0
                     player.on_ground = True
         if player.on_ground and player.direction.y<0:
@@ -59,12 +60,17 @@ class Level:
 
     def horizontal_collision(self):
         player = self.player.sprite
-        player.rect.x += player.direction.x * walk_speed
+        # player.rect.x += player.direction.x * walk_speed
+        player.middlerect.x += player.direction.x * walk_speed
+
         
 
     def run(self):
         self.key_sprites.draw(self.display_surface)
         self.player.draw(self.display_surface)
+        # debug
+        # pygame.draw.rect(self.display_surface,'blue', self.player.sprite.middlerect)
+        # debug
         self.player.update()
         self.vertical_collision()
         self.horizontal_collision()

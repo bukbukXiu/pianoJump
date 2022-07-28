@@ -11,7 +11,7 @@ walk_speed = 7
 jump_speed = -15
 gravity = 1
 
-# lowercase indicates a sharp
+# uppercase indicates a sharp
 note_tile_indices = {
     'a':4,
     'A':1,

@@ -6,6 +6,8 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('graphics/character/small_finger.png').convert_alpha()
         self.rect = self.image.get_rect(bottomleft = pos)
+        # self.middlerect = pygame.Rect(bottomleft = pos + (self.image.get_width() / 2, 0),)
+        self.middlerect = pygame.Rect(self.rect.left + self.rect.width / 2, self.rect.top, 1, self.rect.height)
         self.direction = pygame.math.Vector2(0,0)
         self.on_ground = False
         self.facing_rigth = False
@@ -31,6 +33,7 @@ class Player(pygame.sprite.Sprite):
     def apply_gravity(self):
         self.direction.y += gravity
         self.rect.y += self.direction.y
+        self.middlerect.y += self.direction.y
 
     def jump(self):
         if self.on_ground: 
