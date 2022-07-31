@@ -60,7 +60,7 @@ class Level:
 
     def horizontal_collision(self):
         player = self.player.sprite
-        # player.rect.x += player.direction.x * walk_speed
+        player.rect.x += player.direction.x * walk_speed
         player.middlerect.x += player.direction.x * walk_speed
 
         
