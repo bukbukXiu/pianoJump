@@ -19,7 +19,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-    screen.blit(pygame.image.load('graphics/background.png').convert_alpha(), (0,0))
+    screen.blit(pygame.image.load('../graphics/background.png').convert_alpha(), (0,0))
     level.run()
     pygame.display.update()
     clock.tick(60)

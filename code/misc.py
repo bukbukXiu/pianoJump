@@ -4,7 +4,7 @@ from os import walk
 from pathlib import Path
 
 def import_individual_tiles(path):
-    surface = pygame.image.load('graphics/tiles/keys.png').convert_alpha()
+    surface = pygame.image.load('../graphics/tiles/keys.png').convert_alpha()
     tiles_num = int(surface.get_width() / tile_size)
     tiles_list = []
 

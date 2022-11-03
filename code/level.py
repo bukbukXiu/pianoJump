@@ -17,11 +17,11 @@ class Level:
         self.player = self.player_setup(player_position) 
 
         #sounds
-        self.sounds = import_sounds('sounds/')
+        self.sounds = import_sounds('../sounds/')
 
 
     def create_tile_group(self, layout):
-        tile_list = import_individual_tiles('graphics/tiles/keys.png')
+        tile_list = import_individual_tiles('../graphics/tiles/keys.png')
         sprite_group = pygame.sprite.Group()
 
         for index, note in enumerate(self.layout):
