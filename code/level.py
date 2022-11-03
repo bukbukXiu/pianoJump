@@ -60,10 +60,8 @@ class Level:
 
     def horizontal_collision(self):
         player = self.player.sprite
-        player.rect.x += player.direction.x * walk_speed
-        player.middlerect.x += player.direction.x * walk_speed
-
-        
+        if (player.rect.left <= 0 and player.direction.x > 0) or (player.rect.right >= screen_width and player.direction.x < 0) or (player.rect.left > 0 and player.rect.right < screen_width):
+            player.rect.x += player.direction.x * walk_speed
 
     def run(self):
         self.key_sprites.draw(self.display_surface)

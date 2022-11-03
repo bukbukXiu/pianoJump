@@ -1,4 +1,3 @@
-import imp
 import pygame
 import sys
 from settings import *
